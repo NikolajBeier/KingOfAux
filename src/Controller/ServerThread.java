@@ -29,6 +29,10 @@ public class ServerThread extends Thread {
                     switch(command[0]){
                         case "INITPLAYER":
                             ServerHandles.handleNewPlayer(socket, command);
+                            break;
+                        case "PLAYERREADY":
+                            ServerHandles.playerReady();
+                            break;
                     }
                     out.writeBytes(line + "\n\r");
                     out.flush();

@@ -14,7 +14,10 @@ import javafx.scene.layout.VBox;
 import java.net.Socket;
 
 public class CreateLobby {
-    static int currentPlayers = Information.players.size();
+    static int currentPlayers = -1;
+    public static int readyPlayers = 0;
+    static Button start = new Button("Start Game!");
+    Button ready = new Button("Ready Up");
     public CreateLobby(StackPane layout){
         VBox vBox = new VBox();
         Server server = new Server(4999);
@@ -54,8 +57,13 @@ public class CreateLobby {
 
         new Thread(task).start();
 
-        Button start = new Button("Start Game!");
-        Button ready = new Button("Ready Up");
+        start.setVisible(false);
+        ready.setOnAction(values->{
+            readyPlayers++;
+
+            vBox.getChildren().remove(ready);
+            ready.setVisible(false);
+        });
         start.setOnAction(values->{
         });
         hBox.getChildren().add(start);
@@ -66,5 +74,8 @@ public class CreateLobby {
         layout.getChildren().add(vBox);
         layout.getChildren().add(hBox);
 
+    }
+    public static Button getStart(){
+        return start;
     }
 }

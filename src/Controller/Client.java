@@ -6,13 +6,14 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 
 public class Client {
+    String name;
+    public Client(String name){
+        this.name = name;
+    }
     public void start(String str, int port) throws IOException {
-        try {
             Socket s = new Socket(str, port);
-            joinGame("Walla", s);
-        }catch(Exception e){
-            System.out.println("Could not connect");
-        }
+            joinGame(name, s);
+            ClientHandles clientHandles = new ClientHandles(s);
     }
     private static void joinGame(String name, Socket s) throws IOException {
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));

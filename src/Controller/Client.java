@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
-public class Client {
+public class Client{
     String name;
     public Client(String name){
         this.name = name;

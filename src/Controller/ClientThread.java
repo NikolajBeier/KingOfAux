@@ -3,21 +3,22 @@ package Controller;
 import java.io.*;
 import java.net.Socket;
 
-public class ServerThread extends Thread {
+public class ClientThread extends Thread {
     protected Socket socket;
-    public ServerThread(Socket clientSocket){
-        this.socket = clientSocket;
-    }
+    public ClientThread(Socket clientSocket){ this.socket = clientSocket; }
+
     public void run(){
         InputStream inp = null;
         BufferedReader brinp = null;
         DataOutputStream out = null;
         PrintWriter printout = null;
+        DataInputStream inFromServer = null;
         try {
             inp = socket.getInputStream();
             brinp = new BufferedReader(new InputStreamReader(inp));
             out = new DataOutputStream(socket.getOutputStream());
             printout = new PrintWriter(socket.getOutputStream(), true);
+            inFromServer = new DataInputStream(socket.getInputStream());
         } catch (IOException e) {
             return;
         }
@@ -29,11 +30,8 @@ public class ServerThread extends Thread {
                     String[] command = line.split(":",3);
                     System.out.println("Virker");
                     switch(command[0]){
-                        case "INITPLAYER":
-                            ServerHandles.handleNewPlayer(socket, command);
-                            break;
-                        case "PLAYERREADY":
-                            ServerHandles.playerReady();
+                        case "PLAYERNAMES":
+                            ClientHandles.handleNewPlayer(command);
                             break;
                     }
                     //out.writeBytes(line + "\n\r");

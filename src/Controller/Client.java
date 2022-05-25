@@ -9,11 +9,13 @@ public class Client {
     String name;
     public Client(String name){
         this.name = name;
+
     }
     public void start(String str, int port) throws IOException {
             Socket s = new Socket(str, port);
             joinGame(name, s);
             ClientHandles clientHandles = new ClientHandles(s);
+            new ClientThread(s).start();
     }
     private static void joinGame(String name, Socket s) throws IOException {
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
